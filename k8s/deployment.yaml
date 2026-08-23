@@ -1,0 +1,171 @@
+# ─────────────────────────────────────────────────────────────────────────────
+# Kubernetes Deployment — Google Slides Hybrid MCP Server
+# ─────────────────────────────────────────────────────────────────────────────
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: google-slides-mcp
+  namespace: default
+  labels:
+    app: google-slides-mcp
+    app.kubernetes.io/name: google-slides-mcp
+    app.kubernetes.io/component: server
+    app.kubernetes.io/part-of: google-slides-hybrid-mcp
+    app.kubernetes.io/managed-by: kubectl
+spec:
+  replicas: 2
+  revisionHistoryLimit: 5
+  selector:
+    matchLabels:
+      app: google-slides-mcp
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxSurge: 1
+      maxUnavailable: 0
+  template:
+    metadata:
+      labels:
+        app: google-slides-mcp
+        app.kubernetes.io/name: google-slides-mcp
+        app.kubernetes.io/component: server
+      annotations:
+        prometheus.io/scrape: "true"
+        prometheus.io/port: "8080"
+        prometheus.io/path: "/metrics"
+    spec:
+      serviceAccountName: google-slides-mcp
+      terminationGracePeriodSeconds: 30
+      securityContext:
+        runAsNonRoot: true
+        runAsUser: 1000
+        runAsGroup: 1000
+        fsGroup: 1000
+        seccompProfile:
+          type: RuntimeDefault
+
+      # Spread pods across nodes
+      affinity:
+        podAntiAffinity:
+          preferredDuringSchedulingIgnoredDuringExecution:
+            - weight: 100
+              podAffinityTerm:
+                labelSelector:
+                  matchExpressions:
+                    - key: app
+                      operator: In
+                      values:
+                        - google-slides-mcp
+                topologyKey: kubernetes.io/hostname
+
+      containers:
+        - name: google-slides-mcp
+          image: ghcr.io/google-slides-hybrid-mcp/google-slides-hybrid-mcp:latest
+          imagePullPolicy: IfNotPresent
+          ports:
+            - name: http
+              containerPort: 8080
+              protocol: TCP
+
+          # Environment from ConfigMap
+          envFrom:
+            - configMapRef:
+                name: google-slides-mcp-config
+            - secretRef:
+                name: google-slides-mcp-secrets
+
+          # Resource constraints
+          resources:
+            requests:
+              cpu: 250m
+              memory: 256Mi
+            limits:
+              cpu: 500m
+              memory: 512Mi
+
+          # Startup probe — generous timeout for cold starts
+          startupProbe:
+            httpGet:
+              path: /health
+              port: http
+            initialDelaySeconds: 5
+            periodSeconds: 3
+            failureThreshold: 10
+            timeoutSeconds: 3
+
+          # Liveness probe — restart if unhealthy
+          livenessProbe:
+            httpGet:
+              path: /health
+              port: http
+            initialDelaySeconds: 0
+            periodSeconds: 15
+            failureThreshold: 3
+            timeoutSeconds: 5
+
+          # Readiness probe — remove from LB if not ready
+          readinessProbe:
+            httpGet:
+              path: /ready
+              port: http
+            initialDelaySeconds: 0
+            periodSeconds: 10
+            failureThreshold: 3
+            timeoutSeconds: 3
+
+          # Security context
+          securityContext:
+            allowPrivilegeEscalation: false
+            readOnlyRootFilesystem: true
+            capabilities:
+              drop:
+                - ALL
+
+          # Volume mounts
+          volumeMounts:
+            - name: data
+              mountPath: /app/data
+            - name: tmp
+              mountPath: /tmp
+
+          # Graceful shutdown
+          lifecycle:
+            preStop:
+              exec:
+                command: ["/bin/sh", "-c", "sleep 5"]
+
+      volumes:
+        - name: data
+          persistentVolumeClaim:
+            claimName: google-slides-mcp-data
+        - name: tmp
+          emptyDir:
+            sizeLimit: 64Mi
+
+---
+# PersistentVolumeClaim for SQLite data
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: google-slides-mcp-data
+  namespace: default
+  labels:
+    app: google-slides-mcp
+spec:
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 1Gi
+  storageClassName: standard
+
+---
+# ServiceAccount
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: google-slides-mcp
+  namespace: default
+  labels:
+    app: google-slides-mcp
+    app.kubernetes.io/name: google-slides-mcp

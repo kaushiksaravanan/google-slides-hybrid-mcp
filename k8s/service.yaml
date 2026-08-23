@@ -1,0 +1,21 @@
+# ─────────────────────────────────────────────────────────────────────────────
+# Kubernetes Service — Google Slides Hybrid MCP Server
+# ─────────────────────────────────────────────────────────────────────────────
+apiVersion: v1
+kind: Service
+metadata:
+  name: google-slides-mcp
+  namespace: default
+  labels:
+    app: google-slides-mcp
+    app.kubernetes.io/name: google-slides-mcp
+    app.kubernetes.io/component: server
+spec:
+  type: ClusterIP
+  selector:
+    app: google-slides-mcp
+  ports:
+    - name: http
+      port: 8080
+      targetPort: http
+      protocol: TCP

@@ -1,0 +1,15 @@
+{
+  "mcpServers": {
+    "google-slides-hybrid": {
+      "command": "node",
+      "args": ["C:/Users/YOUR_USER/google-slides-hybrid-mcp/build/index.js"],
+      "env": {
+        "GOOGLE_CLIENT_ID": "YOUR_CLIENT_ID.apps.googleusercontent.com",
+        "GOOGLE_CLIENT_SECRET": "YOUR_CLIENT_SECRET",
+        "GOOGLE_REFRESH_TOKEN": "YOUR_REFRESH_TOKEN",
+        "VISION_ENABLED": "true",
+        "LOG_LEVEL": "info"
+      }
+    }
+  }
+}

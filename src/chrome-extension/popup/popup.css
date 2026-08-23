@@ -1,0 +1,344 @@
+/* Google Slides MCP - Popup Styles */
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+  font-size: 13px;
+  color: #1a1a2e;
+  background: #ffffff;
+  width: 320px;
+  min-height: 100px;
+  overflow-x: hidden;
+}
+
+.popup-container {
+  padding: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+/* ---- Header ---- */
+
+.header {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding-bottom: 12px;
+  border-bottom: 1px solid #e8e8ee;
+}
+
+.header-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  border-radius: 8px;
+  background: #4a6cf7;
+  color: #fff;
+  flex-shrink: 0;
+}
+
+.header-text h1 {
+  font-size: 15px;
+  font-weight: 600;
+  color: #1a1a2e;
+  line-height: 1.2;
+}
+
+.subtitle {
+  font-size: 11px;
+  color: #8888a0;
+  font-weight: 400;
+  letter-spacing: 0.02em;
+}
+
+/* ---- Status Section ---- */
+
+.status-section {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.status-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 8px 10px;
+  background: #f7f7fb;
+  border-radius: 8px;
+}
+
+.status-label {
+  font-size: 12px;
+  font-weight: 500;
+  color: #6b6b80;
+}
+
+.status-indicator {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 12px;
+  font-weight: 500;
+}
+
+.status-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: #d1d1d8;
+  flex-shrink: 0;
+  transition: background-color 0.2s ease;
+}
+
+.status-dot.connected {
+  background: #22c55e;
+  box-shadow: 0 0 6px rgba(34, 197, 94, 0.4);
+}
+
+.status-dot.disconnected {
+  background: #ef4444;
+  box-shadow: 0 0 6px rgba(239, 68, 68, 0.3);
+}
+
+.status-dot.idle {
+  background: #d1d1d8;
+}
+
+/* ---- Settings Section ---- */
+
+.settings-section {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.input-label {
+  font-size: 11px;
+  font-weight: 500;
+  color: #8888a0;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.input-row {
+  display: flex;
+  gap: 6px;
+}
+
+.input-row input {
+  flex: 1;
+  height: 34px;
+  padding: 0 10px;
+  font-size: 12px;
+  font-family: 'SF Mono', 'Fira Code', 'Cascadia Code', monospace;
+  color: #1a1a2e;
+  background: #f7f7fb;
+  border: 1px solid #e0e0ea;
+  border-radius: 6px;
+  outline: none;
+  transition: border-color 0.15s ease;
+}
+
+.input-row input:focus {
+  border-color: #4a6cf7;
+  box-shadow: 0 0 0 2px rgba(74, 108, 247, 0.15);
+}
+
+/* ---- Tab Info ---- */
+
+.tab-info-section {
+  padding: 8px 10px;
+  background: #f0f4ff;
+  border-radius: 8px;
+  border: 1px solid #dce4ff;
+}
+
+.tab-title {
+  font-size: 12px;
+  font-weight: 500;
+  color: #1a1a2e;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 280px;
+}
+
+.tab-url {
+  font-size: 10px;
+  color: #8888a0;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 280px;
+  margin-top: 2px;
+}
+
+/* ---- Buttons ---- */
+
+.actions-section {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  height: 36px;
+  padding: 0 14px;
+  font-size: 12px;
+  font-weight: 500;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.15s ease;
+  outline: none;
+}
+
+.btn:active {
+  transform: scale(0.98);
+}
+
+.btn-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.btn-primary {
+  background: #4a6cf7;
+  color: #fff;
+}
+
+.btn-primary:hover {
+  background: #3b5de7;
+  box-shadow: 0 2px 8px rgba(74, 108, 247, 0.3);
+}
+
+.btn-primary:disabled {
+  background: #a5b4fc;
+  cursor: not-allowed;
+  box-shadow: none;
+}
+
+.btn-secondary {
+  background: #f0f4ff;
+  color: #4a6cf7;
+  border: 1px solid #dce4ff;
+}
+
+.btn-secondary:hover {
+  background: #e0e8ff;
+}
+
+.btn-secondary:disabled {
+  background: #f7f7fb;
+  color: #a5b4fc;
+  border-color: #e8e8ee;
+  cursor: not-allowed;
+}
+
+.btn-danger {
+  background: #fef2f2;
+  color: #ef4444;
+  border: 1px solid #fecaca;
+}
+
+.btn-danger:hover {
+  background: #fee2e2;
+}
+
+.btn-outline {
+  background: transparent;
+  color: #6b6b80;
+  border: 1px solid #e0e0ea;
+}
+
+.btn-outline:hover {
+  background: #f7f7fb;
+  color: #1a1a2e;
+}
+
+/* ---- Content Scripts Section ---- */
+
+.cs-section {
+  padding: 8px 10px;
+  background: #f7f7fb;
+  border-radius: 8px;
+}
+
+.cs-label {
+  font-size: 10px;
+  font-weight: 500;
+  color: #8888a0;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  margin-bottom: 6px;
+}
+
+.cs-list {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.cs-item {
+  font-size: 11px;
+  color: #6b6b80;
+  padding: 3px 0;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.cs-item .cs-tab-id {
+  font-family: 'SF Mono', 'Fira Code', monospace;
+  font-size: 10px;
+  background: #e0e0ea;
+  padding: 1px 5px;
+  border-radius: 3px;
+  color: #4a4a60;
+}
+
+/* ---- Footer ---- */
+
+.footer {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  padding-top: 10px;
+  border-top: 1px solid #e8e8ee;
+  font-size: 10px;
+  color: #b0b0c0;
+}
+
+.separator {
+  color: #d1d1d8;
+}
+
+.footer-link {
+  color: #b0b0c0;
+}
+
+/* ---- Animations ---- */
+
+@keyframes pulse-green {
+  0%, 100% { box-shadow: 0 0 4px rgba(34, 197, 94, 0.4); }
+  50% { box-shadow: 0 0 10px rgba(34, 197, 94, 0.6); }
+}
+
+.status-dot.connected {
+  animation: pulse-green 2s ease-in-out infinite;
+}

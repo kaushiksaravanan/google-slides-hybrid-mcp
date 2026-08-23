@@ -1,0 +1,17 @@
+# ─────────────────────────────────────────────────────────────────────────────
+# Kubernetes PodDisruptionBudget — Google Slides Hybrid MCP Server
+# ─────────────────────────────────────────────────────────────────────────────
+apiVersion: policy/v1
+kind: PodDisruptionBudget
+metadata:
+  name: google-slides-mcp
+  namespace: default
+  labels:
+    app: google-slides-mcp
+    app.kubernetes.io/name: google-slides-mcp
+    app.kubernetes.io/component: pdb
+spec:
+  minAvailable: 1
+  selector:
+    matchLabels:
+      app: google-slides-mcp

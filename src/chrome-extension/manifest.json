@@ -1,0 +1,43 @@
+{
+  "manifest_version": 3,
+  "name": "Google Slides MCP - Live Control",
+  "description": "Connects AI assistants to your Google Slides tabs for live editing via MCP",
+  "version": "1.0.0",
+  "permissions": [
+    "activeTab",
+    "tabs",
+    "scripting",
+    "debugger",
+    "storage",
+    "alarms"
+  ],
+  "host_permissions": [
+    "*://*.google.com/*",
+    "ws://localhost:*/*"
+  ],
+  "background": {
+    "service_worker": "background/service-worker.js"
+  },
+  "content_scripts": [
+    {
+      "matches": ["*://docs.google.com/presentation/*"],
+      "js": ["content/content-script.js"],
+      "run_at": "document_idle"
+    }
+  ],
+  "action": {
+    "default_popup": "popup/popup.html",
+    "default_icon": {
+      "16": "icons/icon-16.png",
+      "32": "icons/icon-32.png",
+      "48": "icons/icon-48.png",
+      "128": "icons/icon-128.png"
+    }
+  },
+  "icons": {
+    "16": "icons/icon-16.png",
+    "32": "icons/icon-32.png",
+    "48": "icons/icon-48.png",
+    "128": "icons/icon-128.png"
+  }
+}

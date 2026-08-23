@@ -1,0 +1,27 @@
+# ─────────────────────────────────────────────────────────────────────────────
+# Kubernetes ConfigMap — Google Slides Hybrid MCP Server
+# ─────────────────────────────────────────────────────────────────────────────
+# Non-secret configuration values. Update these per environment.
+# ─────────────────────────────────────────────────────────────────────────────
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: google-slides-mcp-config
+  namespace: default
+  labels:
+    app: google-slides-mcp
+    app.kubernetes.io/name: google-slides-mcp
+    app.kubernetes.io/component: config
+data:
+  NODE_ENV: "production"
+  LOG_LEVEL: "info"
+  BROWSER_WS_PORT: "9222"
+  VISION_ENABLED: "true"
+  PORT: "8080"
+  DATA_DIR: "/app/data"
+  HEALTH_CHECK_INTERVAL: "30000"
+  MAX_CONCURRENT_SESSIONS: "10"
+  SESSION_TIMEOUT_MS: "300000"
+  CORS_ORIGIN: "*"
+  RATE_LIMIT_WINDOW_MS: "60000"
+  RATE_LIMIT_MAX_REQUESTS: "100"

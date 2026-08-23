@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Google Slides MCP</title>
+  <link rel="stylesheet" href="popup.css">
+</head>
+<body>
+  <div class="popup-container">
+    <!-- Header -->
+    <header class="header">
+      <div class="header-icon">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <rect x="3" y="3" width="18" height="18" rx="3" stroke="currentColor" stroke-width="2"/>
+          <rect x="6" y="8" width="12" height="2" rx="1" fill="currentColor"/>
+          <rect x="6" y="12" width="8" height="2" rx="1" fill="currentColor"/>
+          <rect x="6" y="16" width="10" height="2" rx="1" fill="currentColor"/>
+        </svg>
+      </div>
+      <div class="header-text">
+        <h1>Google Slides MCP</h1>
+        <p class="subtitle">Live Control</p>
+      </div>
+    </header>
+
+    <!-- Connection Status -->
+    <section class="status-section">
+      <div class="status-row">
+        <span class="status-label">Server</span>
+        <span class="status-indicator" id="server-status">
+          <span class="status-dot" id="server-dot"></span>
+          <span id="server-status-text">Disconnected</span>
+        </span>
+      </div>
+      <div class="status-row">
+        <span class="status-label">Tab</span>
+        <span class="status-indicator" id="tab-status">
+          <span class="status-dot" id="tab-dot"></span>
+          <span id="tab-status-text">No tab bound</span>
+        </span>
+      </div>
+    </section>
+
+    <!-- Server Settings -->
+    <section class="settings-section">
+      <label class="input-label" for="server-url">Server URL</label>
+      <div class="input-row">
+        <input
+          type="text"
+          id="server-url"
+          placeholder="ws://localhost:9222"
+          value="ws://localhost:9222"
+          spellcheck="false"
+        />
+      </div>
+    </section>
+
+    <!-- Tab Info -->
+    <section class="tab-info-section" id="tab-info-section" style="display: none;">
+      <div class="tab-info">
+        <div class="tab-title" id="tab-title" title=""></div>
+        <div class="tab-url" id="tab-url"></div>
+      </div>
+    </section>
+
+    <!-- Actions -->
+    <section class="actions-section">
+      <button class="btn btn-primary" id="btn-connect">
+        <span class="btn-icon">
+          <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
+            <path d="M7 1v12M1 7h12" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+          </svg>
+        </span>
+        Connect to Server
+      </button>
+      <button class="btn btn-secondary" id="btn-bind-tab">
+        <span class="btn-icon">
+          <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
+            <rect x="1" y="3" width="12" height="9" rx="1.5" stroke="currentColor" stroke-width="1.5"/>
+            <path d="M4 3V2a1 1 0 011-1h4a1 1 0 011 1v1" stroke="currentColor" stroke-width="1.5"/>
+          </svg>
+        </span>
+        Bind Current Tab
+      </button>
+      <button class="btn btn-danger" id="btn-disconnect" style="display: none;">
+        Disconnect
+      </button>
+      <button class="btn btn-outline" id="btn-unbind" style="display: none;">
+        Unbind Tab
+      </button>
+    </section>
+
+    <!-- Content Scripts Status -->
+    <section class="cs-section" id="cs-section" style="display: none;">
+      <div class="cs-label">Active content scripts</div>
+      <div class="cs-list" id="cs-list"></div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+      <span class="version">v1.0.0</span>
+      <span class="separator">&middot;</span>
+      <span class="footer-link">Google Slides MCP</span>
+    </footer>
+  </div>
+
+  <script src="popup.js"></script>
+</body>
+</html>
